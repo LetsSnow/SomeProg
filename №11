@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+
+class MyString
+{
+private:
+char *itsString;
+
+public:
+
+MyString(int);
+MyString(const char *const);
+//~MyString();
+void Show();
+void Replace(char*,char*);
+};
+void MyString::Replace(char* a,char * b)
+{for (int i=0;itsString[i]!='\0';i++)
+{if (itsString[i]==a[0])
+{if (itsString[i+1]==a[1])
+{itsString[i]=b[0];
+itsString[i+1]=b[1];}}}}
+
+MyString::MyString(int a)
+{
+itsString=new char[a];
+for (int i=0; i<a; i++)
+itsString[i]='0';
+itsString[a-1]='\0';
+}
+
+MyString::MyString(const char * const s)
+{
+int l=0;
+while (s[l]!=NULL)
+{l++;}
+itsString=new char[l+1];
+for (int i=0;i<l;i++)
+itsString[i]=s[i];
+itsString[l]='\0';
+}
+
+void MyString::Show()
+{
+for (int i=0; itsString[i]!='\0';i++)
+cout << itsString[i];
+cout << endl;
+}
+
+void main()
+{
+setlocale(LC_ALL, "rus");
+
+MyString *v1=new MyString("Hi, Forest! ");
+cout << "Первая строчка: " << endl;
+v1->Show();
+cout << "Заменим Hi на  Go." << endl;
+v1->Replace("Hi","Go");
+v1->Show();
+cin.get();
+cin.get();
+}
