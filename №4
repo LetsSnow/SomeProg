@@ -1,0 +1,30 @@
+#include <iostream>
+
+using namespace std;
+
+void main()
+{
+  setlocale (LC_ALL,"Russian");
+	int a=0,e=0;
+	char Skobki[30]="";
+	cout << "Введите скобки( не более 30 ): " << endl;
+	cin >> Skobki;
+
+	while((Skobki[e]!=NULL)&&(a!=-1))
+	{
+
+	
+		if ((Skobki[e]=='(')||(Skobki[e]=='[')||(Skobki[e]=='<')||(Skobki[e]=='{')){a++; e++;}
+		if ((Skobki[e]==')')||(Skobki[e]==']')||(Skobki[e]=='<')||(Skobki[e]=='}')){a--;e++;}
+
+	
+	}
+	if (a==0) 
+		cout << "Правила ввода соблюдены.";
+
+	if (a!=0)
+		cout << "Скобки введены не правильно!";
+
+	cin.get();
+	cin.get();
+}
