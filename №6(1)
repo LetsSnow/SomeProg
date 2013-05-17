@@ -1,0 +1,179 @@
+include <iostream>
+#include <math.h>
+
+using namespace std;
+
+int i,j;
+
+class Calculator
+{
+public:
+  int **M;
+	int n;
+	Calculator(){};
+	Calculator(int k)
+	{
+	int a;
+	n=k;
+	M=new int*[n];
+	for (i=0;i<n;i++)
+	M[i]=new int[n];
+    cout<<"Ввести с клавиатуры? (0 - нет; 1 - да)";
+	cin>>a;
+	for (i=0;i<n;i++)
+		for (j=0;j<n;j++)
+		{if (a==0) M[i][j]=(rand()%1000)/10;
+		else cin>>M[i][j];
+	}
+	};
+
+	Calculator operator + (const Calculator &a)
+	{
+	Calculator p(n);
+	for (i=0;i<n;i++)
+	{for (j=0;j<n;j++)
+	p.M[i][j]=this->M[i][j]+a.M[i][j];}
+	return p;}
+	
+	Calculator operator - (const Calculator &a)
+	{
+	Calculator p(n);
+	for (i=0;i<n;i++)
+	{for (j=0;j<n;j++)
+	p.M[i][j]=this->M[i][j]-a.M[i][j];}
+	return p;
+	}
+	Calculator operator / ( Calculator & a)
+	{
+	Calculator S(n-1);
+    Calculator K(n);	
+	if (a.Determin()==0){
+	cout<<"Ошибка!!!"<<endl;
+	return a;
+}
+else{
+
+		for (int l=0;l<n;l++)
+			for (int d=0;d<n;d++)
+		{
+			for (i=0;i<n;i++)
+				for (j=0;j<n;j++)
+		{
+			if ((i!=l)&&(j!=d)){
+			if ((i>l)&&(j>d))
+				S.M[i-1][j-1]=a.M[i][j];
+			if	((i>l)&&(j<d))
+				S.M[i-1][j]=a.M[i][j];
+			if	((i<l)&&(j>d))
+				S.M[i][j-1]=a.M[i][j];
+			if ((i<l)&&(j<d)) S.M[i][j]=a.M[i][j];	 
+			}
+				}
+				K.M[d][l]=S.Determin()*pow(-1.,(l+d))*(1./(a.Determin()));}
+			cout<<"Матрица обратная матрице №1: "<<endl;
+			K.Output();
+			cout<<endl;
+			Calculator V(n);
+			V=(*this)*K;
+			return V;}
+	}
+	Calculator operator * (const Calculator & a)
+	{
+	Calculator p(n);
+	int k;
+       for (i=0;i<n;i++)
+       for (j=0;j<n;j++)
+    {p.M[i][j]=0;
+    for (k=0;k<n;k++)
+	p.M[i][j]+=this->M[i][k] * a.M[k][j];}
+       return p;
+	}
+	Calculator operator = (const Calculator &a)
+	{
+	if (this!=&a)
+{
+	M=new int*[n];
+	for (i=0;i<n;i++)
+	M[i]=new int[n];
+	for (i=0;i<n;i++)
+		for (j=0;j<n;j++)
+			this->M[i][j]=a.M[i][j];
+}
+return *this;}
+
+void Output()
+{ for (i=0;i<n;i++)
+{{for (j=0;j<n;j++)
+{cout << M[i][j] << " ";}}
+cout << endl;} }
+
+int Determin()
+	{
+	if (n==1) return this->M[0][0];
+	if (n==2)
+		return (this->M[0][0]*this->M[1][1]-this->M[1][0]*this->M[0][1]);
+	int a;
+	int x;
+	int sum11=1,sum12=0,sum21=1,sum22=0;
+	for (i=0;i<n;i++)
+	{
+		sum11=1;
+		x=2*n-1-i;
+		sum21=1;
+		for	(j=0;j<n;j++)
+		{
+			sum21*=this->M[j][x%n];
+			x--;
+			sum11*=this->M[j][(j+i)%n];
+		}
+		sum22+=sum21;
+		sum12+=sum11;
+	}
+	a=sum12-sum22;
+	return a;
+	};
+};
+
+void main()
+{
+setlocale(LC_ALL,"rus");
+
+int n;
+	cout<<"Введите размер матрицы (квадратная):"<<endl;
+	cin>>n;
+
+	Calculator A(n),B(n),C(n),D(n);
+
+	cout << "Матрица №1: " << endl;
+	A.Output();
+	cout << endl;
+
+	cout<<"Матрица №2: "<< endl;
+	B.Output();
+	cout << endl;
+
+	C=A+B;
+	cout << endl;
+	cout <<"Сумма двух матриц: " << endl;
+	C.Output();
+
+	D=B-A;
+	cout<<endl;
+	cout << "Раазность двух матриц: " << endl;
+	D.Output();
+
+	int opred;// переменная для хранения детерминанта данной матрицы
+	opred=A.Determin();
+	cout<<"Детерминант матрицы №1 : "<<opred<<endl;
+
+	D=A*B;
+	cout<<"Результат умножения двух матриц: "<<endl;
+	D.Output();
+
+	D=B/A;
+	cout<<"Результат деление матрицы №2 на матрицу №1: "<<endl;
+	D.Output();
+	cout<<endl;
+
+cin.get();cin.get();
+};
