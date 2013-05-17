@@ -1,0 +1,62 @@
+#include <iostream>
+
+using namespace std;
+
+class MyString
+{
+private:
+  char *itsString;
+public:
+	MyString(const char *const);
+	MyString(int);
+	void MyString::Show();
+//	~MyString();
+
+	int SIZEOf();
+};
+
+MyString::MyString(const char * const s)
+{
+int l=0;
+while (s[l]!=NULL)
+{l++;}
+itsString=new char[l+1];
+for (int i=0;i<l;i++)
+itsString[i]=s[i];
+itsString[l]='\0';
+}
+MyString::MyString(int a)//конструктор для ввода строки
+{
+itsString=new char[a];
+for (int i=0; i<a; i++)
+itsString[i]='0';
+itsString[a-1]='\0';
+}
+
+void MyString::Show()
+{
+for (int i=0; itsString[i]!='\0';i++)
+cout << itsString[i];
+cout << endl;
+}
+
+int MyString::SIZEOf()
+{
+int n=0;
+while(itsString[n]!='\0')
+{n++;}
+return n;
+}
+
+void main()
+{
+setlocale(LC_ALL,"Russian");
+
+MyString *v=new MyString("banana");
+v->Show();
+int g;
+g=v->SIZEOf();
+cout << "Размер строки : " ;
+cout << g << endl;
+cin.get();
+}
