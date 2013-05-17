@@ -1,0 +1,96 @@
+#include<iostream>
+using namespace std;
+
+class MyString
+{
+private:
+char *itsString;
+
+public:
+
+MyString(int);
+MyString(const char *const);
+//~MyString();
+int SIZEOf();
+void Show();
+bool BiggerThen(MyString);
+bool Equals(MyString);
+};
+
+int MyString::SIZEOf()
+{
+int n=0;
+while(itsString[n]!='\0')
+{n++;}
+return n;
+}
+
+MyString::MyString(int a)
+{
+itsString=new char[a];
+for (int i=0; i<a; i++)
+itsString[i]='0';
+itsString[a-1]='\0';
+}
+
+MyString::MyString(const char * const s)
+{
+int l=0;
+while (s[l]!=NULL)
+{l++;}
+itsString=new char[l+1];
+for (int i=0;i<l;i++)
+itsString[i]=s[i];
+itsString[l]='\0';
+}
+void MyString::Show()
+{
+for (int i=0; itsString[i]!='\0';i++)
+cout << itsString[i];
+cout << endl;
+}
+
+bool MyString::Equals(MyString a)
+{
+if (this->SIZEOf()==a.SIZEOf())
+{for (int i=0; this->itsString[i]!='\0';i++)
+if (this->itsString[i]!=a.itsString[i])
+return 0;
+return 1;}
+else return 0;
+}
+
+bool MyString::BiggerThen(const MyString a)
+{
+if (this->Equals(a)) return 0;
+else 
+{
+for (int i=0; itsString[i]!='\0';i++)
+{
+if (itsString[i]==a.itsString[i]) continue;
+else if (itsString[i]>a.itsString[i]) return 1;
+else return 0;}}
+}
+
+void main()
+{
+setlocale(LC_ALL,"Russian");
+
+MyString *v1=new MyString("banana");
+MyString *v2=new MyString("banan");
+
+
+cout << "Первая строка: " << endl;
+v1->Show();
+cout << "Вторая строка: " << endl;
+v2->Show();
+
+bool q=v1->Equals(*v2);
+if (q) cout << "Строки равны. " << endl;
+else {cout << "Строки не равны. " << endl;
+
+bool w=v1->BiggerThen(*v2);
+if (w) cout <<"Строка №1 "<<" > "<<" Строка №2"<<endl;
+else cout <<"Строка №1 "<< " < " <<" Строка №2"<< endl;}
+cin.get();cin.get();
+}
