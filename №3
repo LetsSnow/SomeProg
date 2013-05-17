@@ -1,0 +1,48 @@
+#include <iostream>
+
+using namespace std;
+
+void main()
+{
+
+  setlocale(LC_ALL,".1251");
+	
+	int a,b,d=50;
+	
+
+	cout << "Введите нижнюю границу отрезка(от 0 до 10): " << endl;
+	cin >> a;
+
+	cout << "Введите верхнюю границу отрезка (от 30 до 50): " << endl;
+	cin >> b ;
+
+	cout << "Вывод чисел до (a):" << endl;
+	int c=0;
+	do {
+	
+	c=c++;
+	cout << c << "\n";
+	}
+	while (c<a);
+	
+	cin.get();
+	cin.get();
+	
+	cout << "Вывод чисел из промежутка от " << a << " до " << b << endl;
+	int n=a;
+	do {
+	n=n++;
+	cout << n << "\n";}
+	while (n<b);
+	
+	cin.get();
+
+	cout << "Вывод чисел от (b):" << endl;
+	int m=b;
+	do {
+	m=m++;
+	cout << m << "\n";}
+	while (m<d);
+
+	cin.get();
+}
