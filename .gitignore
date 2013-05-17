@@ -1,13 +1,152 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+#include<iostream>
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
+using namespace std;
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+
+class processor
+{
+
+  int tch;
+	int cena;
+	char type[10];
+
+public: 
+
+	int gettch() const{return tch;}
+	void settch(int stch) {stch=tch;}
+	int getcena() const{return cena;}
+	void setcena(int scena) {scena=cena;}
+	const char* gettype() const{return type;}
+	void settype(char *stype) {strcpy(type,stype);}
+
+
+	void equals(const processor&);
+	void input();
+	void output();
+	//constructors and destructors
+
+	processor();
+	~processor();
+	processor(int,int,char*);
+	processor(int);
+
+};
+
+void processor::equals(const processor&q)
+{
+	int n,p;
+	
+	cout<<"Сравнение тактовых частот:"<<endl;
+	n=(gettch()-q.gettch());
+	if (n>0)
+		cout<<gettype()<<" больше "<<q.gettype()<<" на "<<n<<endl;
+	else if (n<0)
+		cout<<q.gettype()<<" больше "<<gettype()<<" на "<<abs(n)<<endl;
+	else cout<<"Равны = "<<gettch()<<endl;
+
+	cout<<""<<endl;
+	p=(getcena()-q.getcena());
+	if (p>0)
+		cout<<gettype()<<" больше "<<q.gettype()<<" на "<<p<<endl;
+	else if (p<0)
+		cout<<q.gettype()<<" больше "<<gettype()<<" на "<<abs(p)<<endl;
+	else cout<<"Равны = "<<getcena()<<endl;
+
+}
+//конструктор по умолчанию
+
+processor::processor()
+{
+
+	tch=1000;
+	cena=70;
+    strcpy(type,"ATM");
+
+}
+
+//конструктор с параметрами
+
+processor::processor(int a,int b,char* c)
+{
+
+	tch=a;
+	cena=b;
+	strcpy(type,c);
+
+}
+
+//клавиатурный конструктор
+
+processor::processor(int a)
+{
+
+	input();
+
+}
+
+//деструктор
+
+processor::~processor()
+{
+
+}
+
+
+void processor::input()
+{
+
+	cout<<"Введите тактовую частоту, цену и тип через пробел: "<<endl;
+	cin>>tch>>cena>>type;
+
+}
+
+void processor::output()
+{
+
+	cout<<"Тактовая частота: "<<tch<<endl;
+	cout<<"Цена: "<<cena<<endl;
+	cout<<"Тип: "<<type<<endl;
+
+}
+
+
+
+int main(){
+	
+	setlocale(LC_ALL,".1251");
+
+	
+	processor F;
+	processor S(1000,800,"ATM");
+	processor T(1);
+	processor Fo(T);
+	
+	
+	F.setcena(300);
+	F.settch(900);
+	F.settype("AMD");
+
+	Fo.input();
+	
+	F.output();
+	S.output();
+	T.output();
+	Fo.output();
+	cin.get();
+
+	cout<<"\nПервый объект: "<<endl;
+	F.output();
+	cout<<"\nВторой объект: "<<endl;
+	S.output();
+	cout<<"\nТретий объект: "<<endl;
+	T.output();
+	cout<<"\nЧетвертый объект: "<<endl;
+	Fo.output();
+
+	cin.get();
+ 
+	S.equals (T); 
+	
+	cin.get();
+	return 0;
+}
