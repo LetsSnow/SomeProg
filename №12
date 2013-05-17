@@ -1,0 +1,88 @@
+#include <iostream>
+
+using namespace std;
+
+class MyString
+{
+private:
+char *itsString;
+
+public:
+
+MyString(int);
+MyString(const char *const);
+//~MyString();
+int SizeOf();
+void Output();
+void Join(MyString *);
+};
+
+MyString::MyString(int a)
+{
+itsString=new char[a];
+for (int i=0; i<a; i++)
+itsString[i]='0';
+itsString[a-1]='\0';
+}
+
+MyString::MyString(const char * const s)
+{
+int l=0;
+while (s[l]!=NULL)
+{l++;}
+itsString=new char[l+1];
+for (int i=0;i<l;i++)
+itsString[i]=s[i];
+itsString[l]='\0';
+}
+
+int MyString::SizeOf()
+{
+int n=0;
+while(itsString[n]!='\0')
+{n++;}
+return n;
+}
+
+void MyString::Output()
+{
+for (int i=0; itsString[i]!='\0';i++)
+cout << itsString[i];
+cout << endl;
+}
+
+void MyString::Join(MyString *a)
+{
+int k=a->SizeOf();
+int f=this->SizeOf();
+MyString temp(k+f+1);
+//cout<<k+f+1<<endl;
+int i;
+for (i=0;itsString[i]!='\0';i++)
+temp.itsString[i]=itsString[i];
+for (i=f; temp.itsString[i]!='\0';i++)
+temp.itsString[i]=a->itsString[i-f];
+delete []itsString;
+itsString=temp.itsString;
+}
+
+void main()
+{
+setlocale(LC_ALL, "rus");
+
+MyString *v1=new MyString("Ababagalamaga ");
+MyString *v2=new MyString("print some books.");
+
+
+cout << "Первая строка: " << endl;
+v1->Output();
+
+cout << "Вторая строка: " << endl;
+v2->Output();
+
+cout << "Склеем эти две строки: " << endl;
+v1->Join(v2);
+v1->Output();
+
+cin.get();cin.get();
+}
