@@ -1,0 +1,108 @@
+#include<iostream>
+using namespace std;
+
+class MyString
+{
+private:
+char *itsString;
+
+public:
+
+MyString(int);
+MyString(const char *const);
+//~MyString();
+int SizeOf();
+void Show();
+
+void DeleteAfter(char);
+void DeleteBefore(char);
+};
+
+MyString::MyString(int a)
+{
+itsString=new char[a];
+for (int i=0; i<a; i++)
+itsString[i]='0';
+itsString[a-1]='\0';
+}
+
+MyString::MyString(const char * const s)
+{
+int l=0;
+while (s[l]!=NULL)
+{l++;}
+itsString=new char[l+1];
+for (int i=0;i<l;i++)
+itsString[i]=s[i];
+itsString[l]='\0';
+}
+
+/*MyString::~MyString()
+{
+delete [] itsString;
+}*/
+
+int MyString::SizeOf()
+{
+int n=0;
+while(itsString[n]!='\0')
+{n++;}
+return n;
+}
+
+void MyString::Show()
+{
+for (int i=0; itsString[i]!='\0';i++)
+cout << itsString[i];
+cout << endl;
+}
+
+
+void MyString::DeleteAfter(char a)
+{
+int i,n;
+for (i=0;itsString[i]!='/0';i++)
+if (this->itsString[i]==a){n=i+1;break;}
+this->DeleteAfter(n);
+}
+
+void MyString::DeleteBefore(char a)
+{
+int i,n;
+for (i=0;itsString[i]!='\0';i++)
+if (this->itsString[i]==a) {n=i+1;break;}
+this->DeleteBefore(n);
+}
+
+
+
+void main()
+{
+
+  setlocale(LC_ALL,"rus");
+	MyString *v1=new MyString("Hey, apple");
+    MyString *v2=new MyString("Hello, world!");
+
+
+    cout << "Первая строка: " << endl;
+    v1->Show();
+
+	char a;
+	cout << "Введите символ до которого будет происходить удаление: " ;
+	cin >> a ;
+	v1->DeleteBefore(a);
+	cout << endl;
+	v1->Show();
+
+	cout << "Вторая строка: " << endl;
+    v2->Show();
+	char b;
+	cout << "Введите символ после которого будет происходить удаление:" ;
+	cin >> b ;
+	v2->DeleteAfter(b);
+	cout << endl;
+	v2->Show();
+
+	cin.get();
+	cin.get();
+}
