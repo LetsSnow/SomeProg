@@ -1,0 +1,133 @@
+#include<iostream>
+
+using namespace std;
+
+
+class X
+{
+public:
+  int *a;
+	bool r;
+
+	X *Right;
+	X *Left;
+
+	X()
+	{
+		a = new int;
+	};
+
+	~X();
+
+	void input();
+	void output();
+	void PRINT(X *);
+    void PRINT_SPECIAL(X *);
+};
+
+void PRINT_SPECIAL(X *g)
+	{
+	
+		if (g==NULL) return;
+		g->output();
+		PRINT_SPECIAL(g->Right);
+		PRINT_SPECIAL(g->Left);
+	
+	}
+
+
+
+void PRINT(X * z)
+    {
+
+	cout<<"  ###  "<<endl;
+	z -> r = 0;
+	if (z) 
+	{
+	X temp;
+	X *ptemp=&temp;
+	X *m=ptemp, *n=z, *q;
+	while (n!=ptemp)
+	{
+	if (n->r==0)
+	{n->output();
+	n->r=1;}
+	q=n->Left;
+	n->Left=n->Right;
+	if (n==m)
+		n->Right=NULL;
+	else
+		n->Right=m;
+	m=n;
+	if (q) n=q;
+	}}}
+
+void X::input()
+{
+
+	cout<<"a = "<<endl;
+	cin>>*a;
+
+
+};
+
+void X::output()
+{
+
+	cout<<"a = "<<*a<<endl;
+
+}
+
+X::~X()
+{
+	delete a;
+    a=0;
+}
+
+int main()
+{
+
+	setlocale(LC_ALL,".1251");
+
+
+	X one;
+	one.input();
+
+	X two;
+	two.input();
+	X tree;
+	tree.input();
+
+	X four;
+	four.input();
+
+	X five;
+	five.input();
+
+	X six;
+	six.input();
+
+	one.Right=&two;
+	one.Left=&four;
+
+	two.Right=&tree;
+	two.Left=&five;
+
+	tree.Right=&six;
+
+	four.Left=&one;
+	
+	five.Left=&four;
+	five.Right=&six;
+
+	six.Left=&five;
+
+
+	PRINT(&one);
+	PRINT_SPECIAL(&one);
+
+	cin.get();
+	cin.get();
+	return 0;
+
+}
